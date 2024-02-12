@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title> Digital Clock using HTML, CSS and Javascript ( Thursday 2 December 2021) </title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        overflow: hidden;
+      }
+
+      body {
+        font: 15px/1.3 Arial, sans-serif;
+        z-index: 1;
+        background: #dba163;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      a,
+      a:visited {
+        outline: none;
+        color: #389dc1;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      section,
+      footer,
+      header,
+      aside {
+        display: block;
+      }
+ 
+
+      #clock {
+        width: 370px;
+        padding: 40px;
+        position: relative;
+      }
+
+      #clock:after {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 20px;
+        border-radius: 100%;
+        left: 50%;
+        margin-left: -200px;
+        bottom: 2px;
+        z-index: -1;
+      }
+
+      #clock .display {
+        text-align: center;
+        padding: 30px;
+        border-radius: 6px;
+        position: relative;
+        height: 54px;
+        color: #fff;
+      }
+ 
+
+      #clock.dark {
+        background-color: #f8d3ab;
+        border-radius: 9px;
+        transition-duration: 0.4s;
+      }
+      #clock.dark:hover {
+        background-color: #f5c99a;
+      }
+
+      #clock.dark:after {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      #clock.dark .display {
+        background-color: #d39451;
+      }
+
+      h1#time {
+        display: inline-block;
+        font-size: 36px;
+        margin-top: 6px;
+        font-family: cursive;
+        letter-spacing: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="clock" class="dark">
+      <div class="display">
+        <h1 id="time">02:05:26</h1>
+        <small>AM</small>
+      </div>
+    </div>
+    <!-- JavaScript Includes -->
+    <script>
+      const time = document.querySelector("#time");
+      const ampmDOM = time.nextElementSibling;
+
+      function digital_Clock() {
+        const date = new Date();
+        let hours = date.getHours();
+        let ampm = hours > 11 ? "PM" : "AM";
+        hours = hours > 12 ? hours - 12 : !hours ? 12 : hours;
+        hours = hours < 10 ? "0" + hours : hours;
+        let minutes = date.getMinutes();
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        let seconds = date.getSeconds();
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+        return {
+          ampm,
+          hours,
+          minutes,
+          seconds,
+        };
+      }
+
+      function myClock() {
+        const { ampm, hours, minutes, seconds } = digital_Clock();
+        time.innerText = `${hours}:${minutes}:${seconds}`;
+        ampmDOM.innerText = ampm;
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        myClock();
+        setInterval(myClock, 1000);
+      });
+    </script>
+  </body>
+</html>
